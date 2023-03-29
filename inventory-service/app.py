@@ -3,8 +3,8 @@ import json
 import os
 
 TABLE_NAME = os.environ['TABLE_NAME']
-
-dynamodb = boto3.client('dynamodb')
+endpoint_url = "http://localhost.localstack.cloud:4566"
+dynamodb = boto3.client('dynamodb', endpoint_url=endpoint_url)
 
 def lambda_handler(event, context):
     print('EVENT: {}'.format(json.dumps(event)))
