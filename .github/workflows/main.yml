@@ -1,0 +1,63 @@
+name: Deploy on LocalStack 
+
+on:
+  push:
+    paths-ignore:
+      - 'README.md'
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  terraform:
+    name: Setup infrastructure using CDK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Setup SAM
+        uses: aws-actions/setup-sam@v2
+        with:
+          use-installer: true
+
+      - name: Setup SAM-Local 
+        run: |
+          pip install aws-sam-cli-local
+          samlocal --help
+
+      - name: Start LocalStack
+        env:
+          LOCALSTACK_API_KEY: ${{ secrets.LOCALSTACK_API_KEY }}
+          DNS_ADDRESS: 0
+        run: |
+          pip install localstack awscli-local[ver1]
+          pip install terraform-local
+          docker pull localstack/localstack-pro:latest
+          # Start LocalStack in the background
+          DEBUG=1 localstack start -d
+          # Wait 30 seconds for the LocalStack container to become ready before timing out
+          echo "Waiting for LocalStack startup..."
+          localstack wait -t 15
+          echo "Startup complete"
+
+      - name: Build the SAM application
+        run: samlocal build
+
+      - name: Deploy the SAM application
+        run: samlocal deploy --resolve-s3 --no-confirm-changeset
+      
+      - name: List the resources
+        run: |
+          awslocal sqs list-queues
+          awslocal sns list-topics
+          awslocal dynamodb list-tables
+          awslocal lambda list-functions
+          awslocal s3 ls

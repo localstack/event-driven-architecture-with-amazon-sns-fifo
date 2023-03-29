@@ -6,8 +6,8 @@ import random
 import uuid
 
 TOPIC_ARN = os.environ['TOPIC_ARN']
-
-sns = boto3.client('sns')
+endpoint_url = "http://localhost.localstack.cloud:4566"
+sns = boto3.client('sns', endpoint_url=endpoint_url)
 
 def lambda_handler(event, context):
     jobId = str(random.randrange(0, 1000))
