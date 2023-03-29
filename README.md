@@ -25,7 +25,6 @@ The following diagram shows the architecture that this sample application builds
 
 ![Architecture diagram for Event-driven architecture with Amazon SNS FIFO, DynamoDB, Lambda, and S3](./images/architecture.png)
 
-
 We are using the following AWS services and their features to build our infrastructure:
 
 - [SNS](https://docs.localstack.cloud/user-guide/aws/sns/) to coordinate the delivery of messages to subscribing clients in the Analytics and the Inventory service by setting a FIFO topic to process events in an ordered manner
@@ -51,6 +50,8 @@ DEBUG=1 localstack start
 We specified DEBUG=1 to get the printed LocalStack logs directly in the terminal to help us see the event-driven architecture in action. If you prefer running LocalStack in detached mode, you can add the `-d` flag to the `localstack start` command, and use Docker Desktop to view the logs.
 
 ## Instructions
+
+You can build and deploy the sample application on LocalStack by running our `Makefile` commands: `build` and `deploy`. Alternatively, here are instructions to deploy it manually step-by-step.
 
 ### Building the application
 
