@@ -105,3 +105,9 @@ Users can adapt this example workflow to run in their own CI environment. LocalS
 
 The sample application is based on a public [AWS sample app](https://github.com/aws-samples/event-driven-architecture-with-amazon-sns-fifo) that deploys an event-driven architectures with Amazon SNS FIFO. See this AWS blog post for more details: [Building event-driven architectures with Amazon SNS FIFO
 ](https://aws.amazon.com/blogs/compute/building-event-driven-architectures-with-amazon-sns-fifo/).
+
+## Contributing
+
+We appreciate your interest in contributing to our project and are always looking for new ways to improve the developer experience. We welcome feedback, bug reports, and even feature ideas from the community.
+Please refer to the [contributing file](CONTRIBUTING.md) for more details on how to get started. 
+
