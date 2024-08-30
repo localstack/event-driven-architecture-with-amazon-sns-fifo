@@ -138,8 +138,9 @@ aws_dynamodb.JobsInventoryTable:
 	aws --endpoint-url=http://localhost:4566 --profile test-profile --region us-east-1 dynamodb scan --table-name InventoryTable --outut json
 	aws --endpoint-url=http://localhost:4566 --profile test-profile --region us-east-1 dynamodb scan --table-name InventoryTable --filter-expression "employer = :a" --projection-expression "#E, #JC, #AS" --expression-attribute-names file://dynamodb-exp-attr-names.json --expression-attribute-values file://dynamodb-exp-attr-values.json  --output json
 	aws --endpoint-url=http://localhost:4566 --profile test-profile --region us-east-1 dynamodb scan --table-name InventoryTable --filter-expression "id = :id" --projection-expression "#ID, #E, #JC, #AS" --expression-attribute-names file://dynamodb-exp-attr-names.json --expression-attribute-values file://dynamodb-exp-attr-values.json  --output json
-	aws --endpoint-url=http://localhost:4566 --profile test-profile --region us-east-1 dynamodb scan --table-name InventoryTable --filter-expression "id = :id" --projection-expression "#ID" --expression-attribute-names '{\"#ID\":\"id\"}' --expression-attribute-values '{":id": {"S": "9"}}' --output json
-
+	aws --endpoint-url=http://localhost:4566 --profile test-profile --region us-east-1 dynamodb scan --table-name InventoryTable --filter-expression "id = :id" --projection-expression "#ID" --expression-attribute-names '{\"#ID\":\"id\"}' --expression-attribute-values '{\":id\": {\"S\": \"9\"}}' --output json
+	aws --endpoint-url=http://localhost:4566 --profile test-profile --region us-east-1 dynamodb query help
+	aws --endpoint-url=http://localhost:4566 --profile test-profile --region us-east-1 dynamodb query --table-name InventoryTable --projection-expression "eventDetails" --key-condition-expression "id = :id" --expression-attribute-values '{\":id\": {\"S\": \"9\"}}' --return-consumed-capacity TOTAL --output json
 
 .PHONY: usage install run start stop ready logs
 
